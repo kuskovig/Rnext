@@ -1,6 +1,6 @@
 import pytest
 import logging
-import requests
+
 
 from selenium import webdriver
 
@@ -60,16 +60,22 @@ def browser(request):
         caps = {
             "browserName": browser_choice,
             "browserVersion": browser_version,
-            "name": test_name,
             "selenoid:options": {
+                "name": test_name,
                 "enableVNC": vnc,
                 "enableVideo": video,
                 "enableLog": logs
             }
         }
+        if browser_choice == "chrome":
+            options = webdriver.ChromeOptions()
+        else:
+            options = webdriver.FirefoxOptions()
+        for cap in caps.items():
+           options.set_capability(cap[0], cap[1])
         driver = webdriver.Remote(
             command_executor=executor_url,
-            desired_capabilities=caps)
+            options=options)
 
     request.addfinalizer(teardown)
     driver.set_window_size(1960, 1080)
