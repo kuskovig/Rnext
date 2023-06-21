@@ -22,10 +22,7 @@ class MainPage(BasePage):
 		self.wait_for_element_and_click(*locator)
 		return expected_tag
 
-	def check_tag(self, expected_tag):
-		tag_text = self.wait_for_element(*ProjectsPageLocators.TAGS_LOCATOR, 10).get_property("outerText")
-		assert expected_tag.casefold() == tag_text.casefold(),\
-			f'Tag = {tag_text} and expected text = {expected_tag} dont match '
+
 
 	def check_button_name(self, locator, expected_text):
 		expertise_link = self.wait_for_element(*locator)

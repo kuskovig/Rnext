@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotInteractableException
 import time
-
+from .locators import ProjectsPageLocators
 
 class BasePage:
     def __init__(self, browser, url):
@@ -159,23 +159,23 @@ class BasePage:
         self.browser.add_cookie(auth_cookie[0])
 
     @allure.step("Picking random element from list")
-    def pick_random_element(self, locator, timeout=2):
-        self.logger.info(f"Finding all available elements for {locator}")
-        list_of_elements = self.wait_for_elements(*locator, timeout)
+    def pick_random_element(self, _by, _selector, timeout=2):
+        self.logger.info(f"Finding all available elements for {_selector}")
+        list_of_elements = self.wait_for_elements(_by, _selector, timeout)
         try:
-            WebDriverWait(self.browser, timeout).until(EC.element_to_be_clickable(locator))
+            WebDriverWait(self.browser, timeout).until(EC.element_to_be_clickable((_by, _selector)))
         except ElementNotInteractableException:
-            self.logger.warning(f"Cannot click on element {locator}")
+            self.logger.warning(f"Cannot click on element {_selector}")
             allure.attach(
                 name=self.browser.session_id,
                 body=self.browser.get_screenshot_as_png(),
                 attachment_type=allure.attachment_type.PNG
             )
-            raise AssertionError(f"Cannot click on element {locator}")
+            raise AssertionError(f"Cannot click on element {_selector}")
 
         amount_of_elements = len(list_of_elements) - 1
         if amount_of_elements < 0:
-            raise AssertionError(f"No available elements were found with {locator} ")
+            raise AssertionError(f"No available elements were found with {_selector} ")
         else:
             return list_of_elements[random.randint(0, amount_of_elements)]
 
@@ -202,3 +202,8 @@ class BasePage:
                 attachment_type=allure.attachment_type.PNG
             )
             raise AssertionError(f"URL has not changed to expected in {timeout} seconds or changed to unexpected url")
+
+    def check_tag(self, expected_tag):
+        tag_text = self.wait_for_element(*ProjectsPageLocators.TAGS_LOCATOR, 10).get_property("outerText")
+        assert expected_tag.casefold() == tag_text.casefold(), \
+            f'Tag = {tag_text} and expected text = {expected_tag} dont match '

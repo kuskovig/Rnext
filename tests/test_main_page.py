@@ -73,7 +73,9 @@ def test_about_us_navigates_to_about(browser, url):
 
 
 @allure.title("More news lead to News page")
-def test_about_us_navigates_to_about(browser, url):
+def test_more_news_navigates_to_news(browser, url):
 	page = MainPage(browser, url)
 	page.open()
 	page.click_navigation_button(MainPageLocators.MORE_NEWS_BUTTON, NewsLocators.NEWS_PAGE_URL)
+
+
