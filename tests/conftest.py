@@ -31,6 +31,9 @@ def pytest_addoption(parser):
     parser.addoption("--logs",
                      action="store_true",
                      default=False)
+    parser.addoption("--headless",
+                     action="store_true",
+                     default=False)
 
 
 @pytest.fixture
@@ -48,6 +51,7 @@ def browser(request):
     vnc = request.config.getoption("--vnc")
     video = request.config.getoption("--video")
     logs = request.config.getoption("--logs")
+    headless = request.config.getoption("--headless")
 
     if executor_choice == "local":
 

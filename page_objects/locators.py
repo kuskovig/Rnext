@@ -40,7 +40,7 @@ class ProjectsPageLocators:
 	PROJECTS_PAGE_URL = "https://rubius.com/projects"
 	TAGS_LOCATOR = (By.CSS_SELECTOR, ".projects-page__tags app-filter-tag:not(.projects-page__tags-clear)")
 	TAG_DROPDOWNS_LOCATOR = (By.CSS_SELECTOR, ".projects-page__categories app-dropdown") #All 3 dropdowns
-	LIST_OF_TAGS_IN_DROPDOWN_LOCATOR = (By.CSS_SELECTOR, ".projects-page__categories app-dropdown .ng-option") #all available tags
+	LIST_OF_TAGS_IN_DROPDOWN_LOCATOR = (By.CSS_SELECTOR, ".projects-page__categories app-dropdown .ng-option:not(.ng-option-selected)") #all available tags
 	CLEAR_ALL_BUTTON_LOCATOR = (By.CSS_SELECTOR, ".projects-page__tags app-filter-tag.projects-page__tags-clear")
 
 

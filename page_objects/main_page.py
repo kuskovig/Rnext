@@ -20,7 +20,7 @@ class MainPage(BasePage):
 		if expected_tag == "CAD/CAM and BIM":  # kludge for this tag coz button and tag have different names
 			expected_tag = expected_tag.replace(" and ", "/")
 		self.wait_for_element_and_click(*locator)
-		return expected_tag
+		return [expected_tag.casefold()] #since check_tag method compares lists
 
 
 
