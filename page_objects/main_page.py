@@ -13,7 +13,7 @@ class MainPage(BasePage):
 		self.wait_for_element_and_click(*MainPageLocators.INDUSTRY_PROJECTS_LINK)
 		self.check_tag(expected_tag)
 
-	def navigate_to_projects(self, locator):
+	def navigate_to_projects(self, locator) -> list[str]:
 		navigation_button = self.wait_for_element(*locator)
 		outer_text = navigation_button.get_property("outerText")
 		expected_tag = outer_text[:outer_text.find('\n')]

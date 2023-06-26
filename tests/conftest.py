@@ -56,9 +56,15 @@ def browser(request):
     if executor_choice == "local":
 
         if browser_choice == "chrome":
-            driver = webdriver.Chrome()
+            options = webdriver.ChromeOptions()
+            if headless:
+                options.add_argument("--headless=new")
+            driver = webdriver.Chrome(options=options)
         elif browser_choice == "firefox":
-            driver = webdriver.Firefox()
+            options = webdriver.FirefoxOptions()
+            if headless:
+                options.add_argument("--headless=new")
+            driver = webdriver.Firefox(options=options)
     else:
         executor_url = f"http://{executor_choice}:4444/wd/hub"
         caps = {

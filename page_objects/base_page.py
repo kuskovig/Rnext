@@ -1,6 +1,7 @@
 import logging
 import allure
 import random
+import selenium
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotInteractableException
@@ -15,7 +16,7 @@ class BasePage:
 		self.logger = logging.getLogger(type(self).__name__)
 
 	@allure.step("Checking if element in currently visible in view")
-	def check_element_in_view(self, locator):
+	def check_element_in_view(self, locator) -> bool:
 		time.sleep(2)  # wait for page to scroll to element
 		result = self.browser.execute_script(f'let el = document.querySelector("{locator[1]}"); let rect = '
 											 f'el.getBoundingClientRect();return (rect.top >= 0 && rect.left >= 0 && '
@@ -38,12 +39,12 @@ class BasePage:
 			self.browser.get(self.url + relative_url)
 
 	@allure.step("Saving current url")
-	def get_current_url(self):
+	def get_current_url(self) -> str:
 		self.logger.info("Getting current url")
 		return self.browser.current_url
 
 	@allure.step("Checking if the {_selector} element is present on page")
-	def is_element_present(self, _by, _selector):
+	def is_element_present(self, _by, _selector) -> bool:
 		self.logger.info(f"Trying to find '{_selector}' element by '{_by}'")
 		try:
 			self.browser.find_element(_by, _selector)
@@ -203,6 +204,7 @@ class BasePage:
 			)
 			raise AssertionError(f"URL has not changed to expected in {timeout} seconds or changed to unexpected url")
 
+	@allure.step("Check if selected tags are correct")
 	def check_tag(self, expected_tags_list):
 		actual_tags_list = []
 		for actual_tag in self.wait_for_elements(*ProjectsPageLocators.TAGS_LOCATOR):

@@ -42,6 +42,11 @@ class ProjectsPageLocators:
 	TAG_DROPDOWNS_LOCATOR = (By.CSS_SELECTOR, ".projects-page__categories app-dropdown") #All 3 dropdowns
 	LIST_OF_TAGS_IN_DROPDOWN_LOCATOR = (By.CSS_SELECTOR, ".projects-page__categories app-dropdown .ng-option:not(.ng-option-selected)") #all available tags
 	CLEAR_ALL_BUTTON_LOCATOR = (By.CSS_SELECTOR, ".projects-page__tags app-filter-tag.projects-page__tags-clear")
+	PROJECTS_GRID_LOCATOR = (By.CSS_SELECTOR, ".projects-page__projects app-project") #all projects currently visible on a page
+	MORE_BUTTON_LOCATOR = (By.CSS_SELECTOR, "app-projects .projects-page__more button")
+	PROJECT_NAME_HEADING_LOCATOR = (By.CSS_SELECTOR, "app-summary h1")
+	PROJECT_RELATED_PROJECTS_GRID_LOCATOR = (By.CSS_SELECTOR, "app-cards app-project") #all 2 related projects on project page
+	PROJECT_BACK_BUTTON_LOCATOR = (By.CSS_SELECTOR, "app-summary button")
 
 
 class AboutUsLocators:
